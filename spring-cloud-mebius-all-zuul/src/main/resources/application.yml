@@ -1,0 +1,121 @@
+server:
+  port: 9100
+  tomcat:
+    # 最大连接数
+    #max-connections:
+    # 最大等待数，默认100.超出的请求会connect refuse
+    #accept-count:
+    max-threads: 500
+
+spring:
+  application:
+    name: mebius-all-zuul
+
+#注册中心
+eureka:
+  client:
+    # 针对新服务上线, Eureka client获取不及时的问题，在测试环境，可以适当提高Client端拉取Server注册信息的频率，默认：30秒
+    registry-fetch-interval-seconds: 2
+    #设置服务注册中心的URL
+    service-url:
+      defaultZone: http://peer1:8762/eureka/,http://peer2:8762/eureka/
+  instance:
+    hostname: 127.0.0.1
+    instance-id: mebius-all-zuul
+
+###############################################################
+# 3大超时机制，注意之间的关系。 hystrix、ribbon、zuul.host
+##############################################################
+# 个人感觉网关应该可以适度调大点
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 3000
+
+  ########## 重试机制，开启重试会带来幂等、响应超时等问题，一般关掉 ##########
+  #是否所有操作（连接超时、调用异常or超时）都允许重试。默认值为false。  如果设置为true，则非GET请求，只会重试它的连接超时
+  OkToRetryOnAllOperations: true
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 1
+
+  # Ribbon对注册表也有缓存，所以这里要和 registry-fetch-interval-seconds 一起设置
+  ServerListRefreshInterval: 2000
+
+# zuul默认整合了hystrix，所以要注意，它会影响我们的并发量
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            #发生熔断的超时时间调整熔断超时时间(要注意和ribbon.Readtimeout配合），一般的，网关可以适度调大。
+            timeoutInMilliseconds: 60000
+            strategy: SEMAPHORE
+      circuitBreaker:
+        # 短路10s后，让断路器处于半开状态
+        sleepWindowInMilliseconds: 5000
+        # 在配置窗口内，达到1次失败就进行跳闸
+        requestVolumeThreshold: 10
+        # 出错百分比阈值，达到此阈值则短路
+        errorThresholdPercentage: 50
+
+# 配置 zuul
+zuul:
+  host:
+    #####################################################
+    # 区别在于，如果路由方式是serviceId的方式，那么ribbon的生效，
+    # 如果是url的方式，则zuul.host开头的生效。（此处重要！使用serviceId路由和url路由是不一样的超时策略）
+    ###################################################
+    # 类似于ribbon.conntectTimeout 属于建立连接时超时。
+    connect-timeout-millis: 3000
+    # 类似于ribbon.readTimeout，属于建立连接后，超时时间
+    socket-timeout-millis: 9000
+
+  # zuul api网关前缀。
+  #prefix: /dy-api
+  # 是否移除前缀
+  #strip-prefix: true
+
+  # 建议使用这种方式来设置，可以给每个不同的后端微服务设置不同的信号量
+  #zuul.eureka.[service id].semaphore.maxSemaphores: 128
+
+  #########################################################
+
+  # Zuul中默认使用信号量作为资源隔离。并且默认每个路由的信号量是100（这个问题很大）ZuulProperties
+  #ribbon-isolation-strategy: semaphore
+  semaphore:
+    max-semaphores: 5000
+
+  ##########################################################
+  routes:
+    # 动态路由。通用规则
+    springcloud-zuul: /dyapi/**
+
+    #############
+    # 这里可以指定，哪个服务用什么匹配规则
+    # 此处名字随便取
+#    springboot-demo-1:
+#      path: /demo1/**
+#      service-id: springboot-demo-1
+#    feign-service-1:
+#      path: /feign1/**
+#      service-id: springboot-feign-service-1
+
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+      enabled: true
+    routes:
+      enabled: true
+
+#logging:
+#  level:
+#    root: debug
+
+

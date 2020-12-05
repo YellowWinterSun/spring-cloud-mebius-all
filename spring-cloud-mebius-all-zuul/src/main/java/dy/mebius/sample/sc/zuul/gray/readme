@@ -1,0 +1,11 @@
+org.example.gray包下，实现了基于Eureka Metadata的灰度发布方案
+
+基本思想：
+（1）重写ribbon IRule方法，因为Eureka Server不会帮我们区分新旧版本的服务实例。所以默认Eureka Server返回的服务列表，是全部服务
+（2）通过我们自定义的metadata规则，去过滤出有效的服务
+
+
+这里是基于Zuul网关的ribbon改写，微服务间调用也要使用这一套重写来实现需求
+
+todo:
+这里通过引入 dy-springcloud-starter-zuul-autoconfiguration-gray-ribbon 模块来实现gray包的功能，以此来简单学习@AutoConfiguration的用法
