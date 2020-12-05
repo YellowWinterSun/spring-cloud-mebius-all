@@ -1,0 +1,4 @@
+# Project exclude paths
+/spring-cloud-mebius-all-common/target/
+/spring-cloud-mebius-all-eureka-server/target/
+/spring-cloud-mebius-all-hello-service/target/

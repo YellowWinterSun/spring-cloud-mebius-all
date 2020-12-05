@@ -1,0 +1,5 @@
+# 默认配置，可以用启动命令替换
+spring:
+  profiles:
+    active: single
+

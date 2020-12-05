@@ -1,0 +1,36 @@
+########################################
+# 高可用Eureka Server
+#######################################
+server:
+  port: 8763
+
+eureka:
+  server:
+    # 关闭自我保护
+    enable-self-preservation: false
+    # 去除失效服务的时间间隔（毫秒）
+    eviction-interval-timer-in-ms: 5000
+    # 每分钟期望收到心跳数 的百分比
+    renewal-percent-threshold: 0.85
+    # 重新计算期望心跳阈值的周期，默认值：900000
+    renewal-threshold-update-interval-ms: 2000
+  instance:
+    hostname: peer2
+    # 过期时间，默认90s, 可不配置
+    lease-expiration-duration-in-seconds: 90
+    # 续约时间，默认30s，可不配置
+    lease-renewal-interval-in-seconds: 30
+  client:
+    # 是否将自己注册到Eureka Server。默认是true，
+    # 由于是集群部署，所以需要将自己作为client注册到其他Eureka Server中
+    register-with-eureka: true
+    # 针对新服务上线, Eureka client获取不及时的问题，在测试环境，可以适当提高Client端拉取Server注册信息的频率，默认：30秒
+    registry-fetch-interval-seconds: 5
+    # 是否从Eureka Server获取注册信息，由于高可用，需要同步其他Eureka Server信息
+    fetch-registry: true
+    service-url:
+      defaultZone: http://peer1:8762/eureka
+
+spring:
+  application:
+    name: eurka-server
