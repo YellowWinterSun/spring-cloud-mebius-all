@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="网关Zuul 9100" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="dy.mebius.sample.sc.zuul.MyZuulSpringBootApplication" />
+    <module name="spring-cloud-mebius-all-zuul" />
+    <option name="VM_PARAMETERS" value="-XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:InitiatingHeapOccupancyPercent=45 -Xmx2048M -XX:+HeapDumpOnOutOfMemoryError" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

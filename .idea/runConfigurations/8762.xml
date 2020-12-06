@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="注册中心8762" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="dy.mebius.sample.sc.EurekaServerApplication" />
+    <module name="spring-cloud-mebius-all-eureka-server" />
+    <option name="PROGRAM_PARAMETERS" value="--spring.profiles.active=cluster1" />
+    <option name="VM_PARAMETERS" value="-XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:InitiatingHeapOccupancyPercent=45 -Xmx200M -XX:+HeapDumpOnOutOfMemoryError" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
