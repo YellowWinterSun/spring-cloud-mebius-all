@@ -19,7 +19,11 @@ public class HelloController {
     @RequestMapping("/hello")
     public ResResult<String> hello() {
         String msg = "访问hello-service.hello() " + new SimpleDateFormat("HH:mm:ss").format(new Date()) + " [端口号]:" + serverPort;
-
+        try {
+            Thread.sleep(10L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return ResResult.succeed(msg);
     }
 

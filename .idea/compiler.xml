@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="spring-cloud-mebius-all-hello-service" />
+        <module name="spring-cloud-mebius-all-order" />
         <module name="spring-cloud-mebius-all-eureka-server" />
         <module name="spring-cloud-mebius-all-common" />
         <module name="spring-cloud-mebius-all-zuul" />
@@ -21,6 +22,7 @@
       <module name="spring-cloud-mebius-all-common" options="-parameters" />
       <module name="spring-cloud-mebius-all-eureka-server" options="-parameters" />
       <module name="spring-cloud-mebius-all-hello-service" options="-parameters" />
+      <module name="spring-cloud-mebius-all-order" options="-parameters" />
       <module name="spring-cloud-mebius-all-zuul" options="-parameters" />
       <module name="spring-cloud-mebius-eureka-server" options="-parameters" />
     </option>

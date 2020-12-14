@@ -9,7 +9,7 @@ server:
 
 spring:
   application:
-    name: mebius-all-zuul
+    name: mebius-zuul
 
 #注册中心
 eureka:
@@ -88,13 +88,13 @@ zuul:
   ##########################################################
   routes:
     # 动态路由。通用规则
-    springcloud-zuul: /dyapi/**
+    mebius-zuul: /dyapi/**
 
     #############
     # 这里可以指定，哪个服务用什么匹配规则
     # 此处名字随便取
 #    springboot-demo-1:
-#      path: /demo1/**
+#      path: /demo1/**ZuulProperties
 #      service-id: springboot-demo-1
 #    feign-service-1:
 #      path: /feign1/**

@@ -6,11 +6,11 @@ server:
 
 eureka:
   server:
-    # 关闭自我保护
+    # 关闭自我保护   true为开启（默认true）
     enable-self-preservation: false
     # 去除失效服务的时间间隔（毫秒）：优化实例失效后，能够尽快剔除
     # 指定 Eviction Task 定时任务的调度频率，用于剔除过期的实例，此处未使用默认频率，频率为：5/秒，默认为：60/秒
-    eviction-interval-timer-in-ms: 5000
+    eviction-interval-timer-in-ms: 2000
     # 每分钟期望收到心跳数 的百分比
     renewal-percent-threshold: 0.85
     # 重新计算期望心跳阈值的周期，默认值：900000
@@ -26,11 +26,13 @@ eureka:
     # readWriteCacheMap使用的是GuavaCache作为缓存的实现。
     # 过期时间由response-cache-auto-expiration-in-seconds控制，因此这个值的大小影响readWriteCacheMap的缓存时效
     #response-cache-auto-expiration-in-seconds:
+    response-cache-auto-expiration-in-seconds: 2
 
     # response-cache-update-interval-ms是readOnlyCacheMap的定时任务周期时间。
     # 定时任务的工作：同步readOnlyCacheMap下所有的key-value，跟readWriteCacheMap做比较。有变化则更新，没变化则保持原样。
     # 这里有个点要注意的是，readOnlyCacheMap只会遍历自己的所有k-v。而不会同步readWriteCacheMap里面其他的k-v
     #response-cache-update-interval-ms:
+    response-cache-update-interval-ms: 2000
     #############################################################################################
 
   instance:
@@ -44,7 +46,7 @@ eureka:
     # 由于是集群部署，所以需要将自己作为client注册到其他Eureka Server中
     register-with-eureka: true
     # 针对新服务上线, Eureka client获取不及时的问题，在测试环境，可以适当提高Client端拉取Server注册信息的频率，默认：30秒
-    registry-fetch-interval-seconds: 5
+    registry-fetch-interval-seconds: 2
     # 是否从Eureka Server获取注册信息，由于高可用，需要同步其他Eureka Server信息
     fetch-registry: true
     service-url:

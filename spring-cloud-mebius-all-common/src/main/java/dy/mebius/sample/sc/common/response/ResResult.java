@@ -63,7 +63,7 @@ public class ResResult<T> {
         return desc;
     }
 
-    public Object getResult() {
+    public T getResult() {
         return result;
     }
 }

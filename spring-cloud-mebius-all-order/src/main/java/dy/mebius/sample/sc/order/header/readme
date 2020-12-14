@@ -1,0 +1,18 @@
+解决feign微服务间调用，header传递的问题
+- SecuringRequestInterceptor
+
+
+
+同时要解决Hystrix（线程池隔离）时，工作线程和Hystrix调用下游的线程是隔离开的，导致httpRequest无法传递的问题
+- FeignHystrixConcurrencyStrategy
+
+
+
+
+最后需要注意的是，如果是使用多线程的情况下，则需要在主线程调用其他线程前将RequestAttributes对象设置为子线程共享
+ServletRequestAttributes attribute = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+RequestContextHolder.setRequestAttributes(attribute, true);
+场景：
+- 利用线程池，或者直接new Thread（）时，让子线程继续工作。就会丢失掉当前httpRequest。
+
+WARNING：存在问题，子线程再通过feign(Hystrix)调用下游时，有时候能传递httpRequest，有时候失败。（目前未能解决）

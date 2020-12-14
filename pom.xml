@@ -14,6 +14,7 @@
         <module>spring-cloud-mebius-all-eureka-server</module>
         <module>spring-cloud-mebius-all-hello-service</module>
         <module>spring-cloud-mebius-all-zuul</module>
+        <module>spring-cloud-mebius-all-order</module>
     </modules>
 
     <parent>
